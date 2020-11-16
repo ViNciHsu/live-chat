@@ -11,7 +11,7 @@
                         @foreach($users as $user)
                         <li class="oneuser" id="{{ $user->id }}">
 
-                            <span class="pendingmessages"></span>
+                            <span class="pendingmessages">1</span>
 
                             <div class="starmedia">
                                 <div class="starmedia-left">

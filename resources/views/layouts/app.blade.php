@@ -82,8 +82,10 @@
     </main>
 </div>
 {{--<srcipt src="{{ asset('dist/js/jquery.min.js') }}"></srcipt>--}}
-<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+{{--<script src="https://js.pusher.com/7.0/pusher.min.js"></script>--}}
+<script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+{{--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>--}}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
     var rec_id = '';
@@ -103,33 +105,32 @@
         Pusher.logToConsole = true;
 
         var pusher = new Pusher('9544aecd2b5607a46b64', {
-            cluster: 'mt1',
-            forceTLS: true
+            cluster: 'mt1'
         });
 
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function(data) {
-            // alert(JSON.stringify(data));
-            if(authuser_id == data.sender) {
-                //alert('authuseridsender');
+            alert(JSON.stringify(data));
+
+            if(authuser_id == data.sender){
+                alert('authuseridsender');
                 $('#' + data.receiver).click();
-
-            } else if (authuser_id == data.receiver) {
-                if (rec_id == data.sender) {
+            }else if(authuser_id == data.receiver){
+                if(rec_id == data.sender){
                     // if receiver is selected, reload the selected user ...
-                    $('#' + data.sender).click();
-                } else {
+                    $('#' + data.sender).click()
+                }else{
                     // if receiver is not seleted, add notification for that user
-                    var pendmess = parseInt($('#' + data.sender).find('.pendingmessages').html());
+                    var pendmess = parseInt($('#' + data.sender)
+                        .find('.pendingmessages')
+                        .html());
 
-
-                    if(pendmess) {
+                    if(pendmess){
                         $('#' + data.sender).find('.pending').html(pendmess + 1);
-                    } else {
-                        $('#' + data.sender).append('<span class="pendingmessages">1</span>');
+                    }else {
+                        $('#' + data.sender)
+                            .append('<span class="pendingmessages">1</span>');
                     }
-
-
                 }
             }
         });
@@ -151,6 +152,7 @@
                     $('#communicationmessages').html(data);
                     // alert(data);
                     rooltobottom();
+                    // scrollSmoothToBottom('aa');
                 }
             });
         });
@@ -174,11 +176,11 @@
 
                         },
                         error: function (jqXHR, status, err){
-
                         },
 
                         complete: function (){
                             rooltobottom();
+                            // scrollSmoothToBottom('aa');
                         }
                     })
                 }
@@ -191,6 +193,14 @@
             scrollTop: $('.communicationmessage-wrapper').get(0).scrollHeight
         }, 50);
     }
+
+    function scrollSmoothToBottom (id) {
+        var div = document.getElementById(id);
+        $('#' + id).animate({
+            scrollTop: div.scrollHeight - div.clientHeight
+        }, 500);
+    }
+
 </script>
 
 </body>
