@@ -28,7 +28,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::where('id', '!=', Auth::id())->get();
+//        $users = User::where('id', '!=', Auth::id())->get();
+        $users = DB::select("select users.id, users.name, users.image, users.email, count(is_viewed) as unread
+        from users LEFT JOIN communicationmessages ON users.id = communicationmessages.sender and is_viewed = 0 and communicationmessages.receiver = " . Auth::id() . "
+        where users.id != " . Auth::id() . "
+        group by users.id, users.name, users.image, users.email");
+//        dd($users);
         return view('home',[
             'users' => $users
         ]);

@@ -1,4 +1,4 @@
-<div class="communicationmessage-wrapper" id="aa">
+<div class="communicationmessage-wrapper">
     <ul class="communicationmessages">
 
         @foreach($communicationmessages as $communicationmessage)

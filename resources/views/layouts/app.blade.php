@@ -110,27 +110,28 @@
 
         var channel = pusher.subscribe('my-channel');
         channel.bind('my-event', function(data) {
-            alert(JSON.stringify(data));
+            // alert(JSON.stringify(data));
 
-            if(authuser_id == data.sender){
-                alert('authuseridsender');
+            if(authuser_id == data.sender) {
+                //alert('authuseridsender');
                 $('#' + data.receiver).click();
-            }else if(authuser_id == data.receiver){
-                if(rec_id == data.sender){
-                    // if receiver is selected, reload the selected user ...
-                    $('#' + data.sender).click()
-                }else{
-                    // if receiver is not seleted, add notification for that user
-                    var pendmess = parseInt($('#' + data.sender)
-                        .find('.pendingmessages')
-                        .html());
 
-                    if(pendmess){
+            } else if (authuser_id == data.receiver) {
+                if (rec_id == data.sender) {
+                    // if receiver is selected, reload the selected user ...
+                    $('#' + data.sender).click();
+                } else {
+                    // if receiver is not seleted, add notification for that user
+                    var pendmess = parseInt($('#' + data.sender).find('.pendingmessages').html());
+
+
+                    if(pendmess) {
                         $('#' + data.sender).find('.pending').html(pendmess + 1);
-                    }else {
-                        $('#' + data.sender)
-                            .append('<span class="pendingmessages">1</span>');
+                    } else {
+                        $('#' + data.sender).append('<span class="pendingmessages">1</span>');
                     }
+
+
                 }
             }
         });
@@ -152,7 +153,6 @@
                     $('#communicationmessages').html(data);
                     // alert(data);
                     rooltobottom();
-                    // scrollSmoothToBottom('aa');
                 }
             });
         });
@@ -180,7 +180,6 @@
 
                         complete: function (){
                             rooltobottom();
-                            // scrollSmoothToBottom('aa');
                         }
                     })
                 }
@@ -192,13 +191,6 @@
         $('.communicationmessage-wrapper').animate({
             scrollTop: $('.communicationmessage-wrapper').get(0).scrollHeight
         }, 50);
-    }
-
-    function scrollSmoothToBottom (id) {
-        var div = document.getElementById(id);
-        $('#' + id).animate({
-            scrollTop: div.scrollHeight - div.clientHeight
-        }, 500);
     }
 
 </script>
