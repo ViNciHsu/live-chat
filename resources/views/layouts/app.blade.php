@@ -105,7 +105,8 @@
         Pusher.logToConsole = true;
 
         var pusher = new Pusher('9544aecd2b5607a46b64', {
-            cluster: 'mt1'
+            cluster: 'mt1',
+            forceTLS: true
         });
 
         var channel = pusher.subscribe('my-channel');
@@ -113,7 +114,7 @@
             // alert(JSON.stringify(data));
 
             if(authuser_id == data.sender) {
-                //alert('authuseridsender');
+                // alert(data.receiver);
                 $('#' + data.receiver).click();
 
             } else if (authuser_id == data.receiver) {
@@ -123,10 +124,8 @@
                 } else {
                     // if receiver is not seleted, add notification for that user
                     var pendmess = parseInt($('#' + data.sender).find('.pendingmessages').html());
-
-
                     if(pendmess) {
-                        $('#' + data.sender).find('.pending').html(pendmess + 1);
+                        $('#' + data.sender).find('.pendingmessages').html(pendmess + 1);
                     } else {
                         $('#' + data.sender).append('<span class="pendingmessages">1</span>');
                     }
@@ -141,7 +140,7 @@
             $('.oneuser').removeClass('active');
             $(this).addClass('active');
 
-            // $(this).find('.pendingmessages').remove();
+            $(this).find('.pendingmessages').remove();
             rec_id = $(this).attr('id');
             // alert('rec_id2:'+rec_id);
             $.ajax({
